@@ -19,6 +19,6 @@ constraint = x - (z + y) < x - (y - z)
 print constraint
 
 q = 15
-constraint = q * x  == x - (y - q * z)
+constraint = q * x == x - (y - q * z)
 print constraint
 
