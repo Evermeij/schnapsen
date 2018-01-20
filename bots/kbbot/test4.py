@@ -115,9 +115,17 @@ kb.add_clause(~PJ9, J9)
 kb.add_clause(~PJ14, J14)
 kb.add_clause(~PJ19, J19)
 # Add here other strategies
+kb.add_clause(~A0, PA0)
+kb.add_clause(~A5, PA5)
+kb.add_clause(~A10, PA10)
+kb.add_clause(~A15, PA15)
+kb.add_clause(~PA0, A0)
+kb.add_clause(~PA5, A5)
+kb.add_clause(~PA10, A10)
+kb.add_clause(~PA15, A15)
 
 
-kb.add_clause(~PJ4)
+kb.add_clause(~A0)
 # Print all models of the knowledge base
 for model in kb.models():
     print model
