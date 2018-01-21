@@ -35,20 +35,22 @@ class Bot:
 
             # Check for possible weddings
             for move in moves:
-
                 if not self.kb_consistent_marriage(state, move):
                     print "Wedding strategy Applied"
                     return move
 
+            # Check for the lowest non trump move
             for move in moves:
-
                 if not self.kb_consistent_low(state, move):
-                    if not self.kb_consistent_trump(state, move):
-                        print "Low non trump strategy Applied"
-                        return move
+                    print "Low strategy Applied"
+                    return move
 
         else:
-            print "random move made"
+            # Check lowest non trump move to win
+            for move in moves:
+                if not self.kb_consistent_trump(state, move):
+                    print "Low strategy Applied"
+                    return move
             return random.choice(moves)
 
 
@@ -116,12 +118,14 @@ class Bot:
 
         return kb.satisfiable()
 
+
     def kb_consistent_trump(self, state, move):
         # type: (State, move) -> bool
 
         kb = KB()
 
         load2.general_information(kb)
+
         load2.strategy_knowledge(kb)
 
         index = move[0]
@@ -132,6 +136,7 @@ class Bot:
         kb.add_clause(~strategy_variable)
 
         return kb.satisfiable()
+
 
     def kb_consistent(self, state, move):
         # type: (State, move) -> bool

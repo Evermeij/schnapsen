@@ -135,10 +135,23 @@ PC17 = Boolean('pc17')
 PC18 = Boolean('pc18')
 PC19 = Boolean('pc19')
 
-TC = Boolean('TC')
-TD = Boolean('TD')
-TH = Boolean('TH')
-TS = Boolean('TS')
+PNT2 = Boolean('pnt2')
+PNT3 = Boolean('pnt3')
+PNT4 = Boolean('pnt4')
+PNT7 = Boolean('pnt7')
+PNT8 = Boolean('pnt8')
+PNT9 = Boolean('pnt9')
+PNT12 = Boolean('pnt12')
+PNT13 = Boolean('pnt13')
+PNT14 = Boolean('pnt14')
+PNT17 = Boolean('pnt17')
+PNT18 = Boolean('pnt18')
+PNT19 = Boolean('pnt19')
+
+TC = Boolean('TrumpC')
+TD = Boolean('TrumpD')
+TH = Boolean('TrumpH')
+TS = Boolean('TrumpS')
 
 # Create a new knowledge base
 kb = KB()
@@ -265,76 +278,57 @@ kb.add_clause(TE14)
 kb.add_clause(TE19)
 
 ###########################################################
-kb.add_clause(~PC2, J2, Q2, K2)
+kb.add_clause(~PC2, J2, Q2)
 kb.add_clause(~J2, PC2)
 kb.add_clause(~Q2, PC2)
-kb.add_clause(~K2, PC2)
 
-kb.add_clause(~PC3, J3, Q3, K3)
+kb.add_clause(~PC3, J3, Q3)
 kb.add_clause(~J3, PC3)
 kb.add_clause(~Q3, PC3)
-kb.add_clause(~K3, PC3)
 
-kb.add_clause(~PC4, J4, Q4, K4)
+kb.add_clause(~PC4, J4, Q4)
 kb.add_clause(~J4, PC4)
 kb.add_clause(~Q4, PC4)
-kb.add_clause(~K4, PC4)
 
-kb.add_clause(~PC7, J7, Q7, K7)
+kb.add_clause(~PC7, J7, Q7)
 kb.add_clause(~J7, PC7)
 kb.add_clause(~Q7, PC7)
-kb.add_clause(~K7, PC7)
 
-kb.add_clause(~PC8, J8, Q8, K8)
+kb.add_clause(~PC8, J8, Q8)
 kb.add_clause(~J8, PC8)
 kb.add_clause(~Q8, PC8)
-kb.add_clause(~K8, PC8)
 
-kb.add_clause(~PC9, J9, Q9, K9)
+kb.add_clause(~PC9, J9, Q9)
 kb.add_clause(~J9, PC9)
 kb.add_clause(~Q9, PC9)
-kb.add_clause(~K9, PC9)
 
-kb.add_clause(~PC12, J12, Q12, K12)
+kb.add_clause(~PC12, J12, Q12)
 kb.add_clause(~J12, PC12)
 kb.add_clause(~Q12, PC12)
-kb.add_clause(~K12, PC12)
 
-kb.add_clause(~PC13, J13, Q13, K13)
+kb.add_clause(~PC13, J13, Q13)
 kb.add_clause(~J13, PC13)
 kb.add_clause(~Q13, PC13)
-kb.add_clause(~K13, PC13)
 
-kb.add_clause(~PC14, J14, Q14, K14)
+kb.add_clause(~PC14, J14, Q14)
 kb.add_clause(~J14, PC14)
 kb.add_clause(~Q14, PC14)
 kb.add_clause(~K14, PC14)
 
-kb.add_clause(~PC17, J17, Q17, K17)
+kb.add_clause(~PC17, J17, Q17)
 kb.add_clause(~J17, PC17)
 kb.add_clause(~Q17, PC17)
-kb.add_clause(~K17, PC17)
 
-kb.add_clause(~PC18, J18, Q18, K18)
+kb.add_clause(~PC18, J18, Q18)
 kb.add_clause(~J18, PC18)
 kb.add_clause(~Q18, PC18)
-kb.add_clause(~K18, PC18)
 
-kb.add_clause(~PC19, J19, Q19, K19)
+kb.add_clause(~PC19, J19, Q19)
 kb.add_clause(~J19, PC19)
 kb.add_clause(~Q19, PC19)
-kb.add_clause(~K19, PC19)
 
 #######################################
-kb.add_clause(~PC2, ~TC)
-kb.add_clause(PC2, TC)
-kb.add_clause(~PC3, ~TC)
-kb.add_clause(PC3, TC)
-kb.add_clause(~PC4, ~TC)
-kb.add_clause(PC4, TC)
 
-kb.add_clause(~PC2)
-kb.add_clause(~TC)
 
 # Print all models of the knowledge base
 for model in kb.models():
