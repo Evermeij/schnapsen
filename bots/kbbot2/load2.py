@@ -205,6 +205,11 @@ WT12SS = Boolean('wt12SS')
 WT02SS = Boolean('wt02SS')
 WT01SS = Boolean('wt01SS')
 
+WTTCC = Boolean('wttCC')
+WTTDD = Boolean('wttDD')
+WTTHH = Boolean('wttHH')
+WTTSS = Boolean('wttSS')
+
 
 def general_information(kb):
     # GENERAL INFORMATION ABOUT THE CARDS
@@ -334,3 +339,8 @@ def strategy_knowledge(kb):
     kb.add_clause(WT12SS)
     kb.add_clause(WT02SS)
     kb.add_clause(WT01SS)
+
+    kb.add_clause(WTTCC)
+    kb.add_clause(WTTSS)
+    kb.add_clause(WTTHH)
+    kb.add_clause(WTTDD)

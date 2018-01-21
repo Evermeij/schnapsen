@@ -205,6 +205,11 @@ WT12SS = Boolean('wt12SS')
 WT02SS = Boolean('wt02SS')
 WT01SS = Boolean('wt01SS')
 
+WTTCC = Boolean('wttCC')
+WTTDD = Boolean('wttDD')
+WTTHH = Boolean('wttHH')
+WTTSS = Boolean('wttSS')
+
 
 
 # Create a new knowledge base

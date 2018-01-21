@@ -20,7 +20,8 @@ class Bot:
         pass
 
     def get_move(self, state):
-        moves = sorted(state.moves(), key=lambda tup: tup[0])
+        moves = sorted(state.moves(), key=lambda tup: tup[0], reverse=True)
+        random.shuffle(moves)
 
         player = state.whose_turn()
         on_lead = state.leader()
@@ -56,10 +57,10 @@ class Bot:
                     return move
 
             # Check for the lowest trick winning card
-            # for move in moves:
-            #     if not self.kb_consistent_trump_win(state, move):
-            #         print "Trump card win strategy"
-            #         return move
+            for move in moves:
+                if not self.kb_consistent_trump_win(state, move):
+                    print "Trump card win strategy applied"
+                    return move
 
             print "random move made - not on lead"
             return random.choice(moves)
@@ -141,18 +142,29 @@ class Bot:
 
         return kb.satisfiable()
 
-    def kb_consistent(self, state, move):
+    def kb_consistent_trump_win(self, state, move):
         # type: (State, move) -> bool
 
         kb = KB()
 
         load2.general_information(kb)
-
         load2.strategy_knowledge(kb)
 
-        index = move[0]
+        opp_card = state.get_opponents_played_card()
+        opp_card_suit = Deck.get_suit(opp_card)
+        opp_card_rank = opp_card % 5
 
-        variable_string = "pc" + str(index)
+        p_card = move[0]
+        p_card_suit = Deck.get_suit(p_card)
+        p_card_rank = p_card % 5
+
+        trump_suit = state.get_trump_suit()
+
+        if opp_card_suit == trump_suit:
+            variable_string = "at" + str()
+        else:
+            variable_string = "wtt" + str(p_card_suit) + str(trump_suit)
+
         strategy_variable = Boolean(variable_string)
 
         kb.add_clause(~strategy_variable)
