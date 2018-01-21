@@ -337,7 +337,8 @@ kb.add_clause(TS, ~J19, PC19)
 kb.add_clause(TS, ~Q19, PC19)
 kb.add_clause(TS, ~K19, PC19)
 
-
+kb.add_clause(~PC12)
+kb.add_clause(~TH)
 # Print all models of the knowledge base
 for model in kb.models():
     print model
