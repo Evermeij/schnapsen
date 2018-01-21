@@ -110,6 +110,11 @@ A17 = Boolean('a17')
 A18 = Boolean('a18')
 A19 = Boolean('a19')
 
+M23 = Boolean('m23')
+M78 = Boolean('m78')
+M1213 = Boolean('m1213')
+M1718 = Boolean('m1718')
+
 # Create a new knowledge base
 kb = KB()
 
@@ -144,8 +149,26 @@ kb.add_clause(A15)
 # Add clauses (This list is sufficient for this strategy)
 # PJ is the strategy to play jacks first, so all we need to model is all x PJ(x) <-> J(x),
 # In other words that the PJ strategy should play a card when it is a jack
-
-
+kb.add_clause(~M23, K2, K7, K12, K17)
+kb.add_clause(~M23, K2, K7, K12, Q18)
+kb.add_clause(~M23, K2, K7, Q13, K17)
+kb.add_clause(~M23, K2, K7, Q13, Q18)
+kb.add_clause(~M23, K2, Q8, K12, K17)
+kb.add_clause(~M23, K2, Q8, K12, Q18)
+kb.add_clause(~M23, K2, Q8, Q13, K17)
+kb.add_clause(~M23, K2, Q8, Q13, Q18)
+kb.add_clause(~M23, Q3, K7, K12, K17)
+kb.add_clause(~M23, Q3, K7, K12, Q18)
+kb.add_clause(~M23, Q3, K7, Q13, K17)
+kb.add_clause(~M23, Q3, Q8, K12, K17)
+kb.add_clause(~M23, Q3, K7, Q13, Q18)
+kb.add_clause(~M23, Q3, Q8, K12, Q18)
+kb.add_clause(~M23, Q3, Q8, Q13, K17)
+kb.add_clause(~M23, Q3, Q8, Q13, Q18)
+kb.add_clause(M23, ~K2, ~Q3)
+kb.add_clause(M23, ~K7, ~Q8)
+kb.add_clause(M23, ~K12, ~Q13)
+kb.add_clause(M23, ~K17, ~Q18)
 
 # Print all models of the knowledge base
 for model in kb.models():
