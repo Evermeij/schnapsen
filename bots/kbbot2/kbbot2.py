@@ -46,6 +46,7 @@ class Bot:
                     print "Low non trump strategy Applied"
                     return move
         else:
+            print "random move made"
             return random.choice(moves)
 
 
@@ -94,6 +95,7 @@ class Bot:
 
             return kb.satisfiable()
 
+        return True
 
     def kb_consistent_low_non_trump(self, state, move):
         # type: (State, move) -> bool
@@ -105,6 +107,7 @@ class Bot:
 
         card = move[0]
         trump_suit = state.get_trump_suit()
+        print "card: {}, suit:, {}".format(card, trump_suit)
 
         variable_string = "pc" + str(card)
         strategy_variable = Boolean(variable_string)

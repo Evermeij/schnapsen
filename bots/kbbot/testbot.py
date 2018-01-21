@@ -120,6 +120,7 @@ TE9 = Boolean('te9')
 TE14 = Boolean('te14')
 TE19 = Boolean('te19')
 
+PC6 = Boolean('pc6')
 PC0 = Boolean('pc0')
 PC2 = Boolean('pc2')
 PC3 = Boolean('pc3')
@@ -336,7 +337,8 @@ kb.add_clause(TS, ~J19, PC19)
 kb.add_clause(TS, ~Q19, PC19)
 kb.add_clause(TS, ~K19, PC19)
 
-
+kb.add_clause(~PC19)
+kb.add_clause(~TS)
 # Print all models of the knowledge base
 for model in kb.models():
     print model
