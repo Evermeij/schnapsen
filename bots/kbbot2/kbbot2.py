@@ -42,9 +42,11 @@ class Bot:
 
             for move in moves:
 
-                if not self.kb_consistent_low_non_trump(state, move):
-                    print "Low non trump strategy Applied"
-                    return move
+                if not self.kb_consistent_low(state, move):
+                    if not self.kb_consistent_trump(state, move):
+                        print "Low non trump strategy Applied"
+                        return move
+
         else:
             print "random move made"
             return random.choice(moves)
@@ -97,7 +99,7 @@ class Bot:
 
         return True
 
-    def kb_consistent_low_non_trump(self, state, move):
+    def kb_consistent_low(self, state, move):
         # type: (State, move) -> bool
 
         kb = KB()
@@ -106,19 +108,30 @@ class Bot:
         load2.strategy_knowledge(kb)
 
         card = move[0]
-        trump_suit = state.get_trump_suit()
-        print "card: {}, suit:, {}".format(card, trump_suit)
 
         variable_string = "pc" + str(card)
         strategy_variable = Boolean(variable_string)
-        trump_suit_string = "T" + str(trump_suit)
-        trump_variable = Boolean(trump_suit_string)
 
         kb.add_clause(~strategy_variable)
-        kb.add_clause(~trump_variable)
 
         return kb.satisfiable()
 
+    def kb_consistent_trump(self, state, move):
+        # type: (State, move) -> bool
+
+        kb = KB()
+
+        load2.general_information(kb)
+        load2.strategy_knowledge(kb)
+
+        index = move[0]
+
+        variable_string = "pc" + str(index)
+        strategy_variable = Boolean(variable_string)
+
+        kb.add_clause(~strategy_variable)
+
+        return kb.satisfiable()
 
     def kb_consistent(self, state, move):
         # type: (State, move) -> bool
