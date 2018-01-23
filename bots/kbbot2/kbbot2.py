@@ -50,16 +50,16 @@ class Bot:
             # print "random move made - on lead"
             return random.choice(moves)
         else:
-            # Check for the lowest trick winning card
+            # Check for the lowest matching trick winning card
             for move in moves:
                 if not self.kb_consistent_matching_win(state, move):
                     # print "Matching suit card win strategy applied"
                     return move
 
-            # Check for the lowest trick winning card
+            # Check for the lowest trump suit trick winning card
             for move in moves:
                 if not self.kb_consistent_trump_win(state, move):
-                    # print "Trump card win strategy applied #####################################"
+                    # print "Trump card win strategy applied"
                     return move
 
             # Check for low non trump moves
