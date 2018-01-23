@@ -11,7 +11,7 @@ from load.py.
 from api import State, Deck
 import random, load2
 
-from bots.kbbot.kb import KB, Boolean
+from bots.kbbot.kb import KB, Boolean, Integer
 
 
 class Bot:
@@ -30,39 +30,45 @@ class Bot:
             # Check for possible Trump Exchange
             for move in moves:
                 if not self.kb_consistent_trump_exchange(state, move):
-                    print "Trump exchange strategy applied"
+                    # print "Trump exchange strategy applied"
                     return move
 
             # Check for possible weddings
             for move in moves:
 
                 if not self.kb_consistent_marriage(state, move):
-                    print "Wedding strategy applied"
+                    # print "Wedding strategy applied"
                     return move
 
             # Check for low non trump moves
             for move in moves:
 
                 if not self.kb_consistent_low_non_trump(state, move):
-                    print "Low non trump strategy applied"
+                    # print "Low non trump strategy applied"
                     return move
 
-            print "random move made - on lead"
+            # print "random move made - on lead"
             return random.choice(moves)
         else:
             # Check for the lowest trick winning card
             for move in moves:
                 if not self.kb_consistent_matching_win(state, move):
-                    print "Matching suit card win strategy applied"
+                    # print "Matching suit card win strategy applied"
                     return move
 
             # Check for the lowest trick winning card
             for move in moves:
                 if not self.kb_consistent_trump_win(state, move):
-                    print "Trump card win strategy applied"
+                    # print "Trump card win strategy applied #####################################"
                     return move
 
-            print "random move made - not on lead"
+            # Check for low non trump moves
+            for move in moves:
+                if not self.kb_consistent_low_non_trump(state, move):
+                    # print "Low non trump strategy applied"
+                    return move
+
+            # print "random move made - not on lead"
             return random.choice(moves)
 
     # Note: In this example, the state object is not used,
@@ -160,12 +166,20 @@ class Bot:
 
         trump_suit = state.get_trump_suit()
 
+        constraint_a = Integer('me') > Integer('op')
+        constraint_b = Integer('op') > Integer('me')
+
         if opp_card_suit == trump_suit:
-            variable_string = "at" + str()
+            if p_card_suit == trump_suit:
+                if opp_card_rank < p_card_rank:
+                    strategy_variable = constraint_b
+                else:
+                    strategy_variable = constraint_a
+            else:
+                strategy_variable = constraint_b
         else:
             variable_string = "wtt" + str(p_card_suit) + str(trump_suit)
-
-        strategy_variable = Boolean(variable_string)
+            strategy_variable = Boolean(variable_string)
 
         kb.add_clause(~strategy_variable)
 

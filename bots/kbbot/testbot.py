@@ -210,7 +210,10 @@ WTTDD = Boolean('wttDD')
 WTTHH = Boolean('wttHH')
 WTTSS = Boolean('wttSS')
 
-
+op = Integer('op')
+me = Integer('me')
+constraint_a = me > op
+constraint_b = op > me
 
 # Create a new knowledge base
 kb = KB()
@@ -418,6 +421,8 @@ kb.add_clause(WT12SS)
 kb.add_clause(WT02SS)
 kb.add_clause(WT01SS)
 
+kb.add_clause(constraint_a)
+kb.add_clause(~constraint_b)
 
 
 # Print all models of the knowledge base

@@ -210,6 +210,11 @@ WTTDD = Boolean('wttDD')
 WTTHH = Boolean('wttHH')
 WTTSS = Boolean('wttSS')
 
+op = Integer('op')
+me = Integer('me')
+constraint_a = me > op
+constraint_b = op > me
+
 
 def general_information(kb):
     # GENERAL INFORMATION ABOUT THE CARDS
@@ -340,7 +345,11 @@ def strategy_knowledge(kb):
     kb.add_clause(WT02SS)
     kb.add_clause(WT01SS)
 
+    # Use Trump card to win trick
     kb.add_clause(WTTCC)
     kb.add_clause(WTTSS)
     kb.add_clause(WTTHH)
     kb.add_clause(WTTDD)
+
+    kb.add_clause(constraint_a)
+    kb.add_clause(~constraint_b)
