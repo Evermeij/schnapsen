@@ -15,6 +15,7 @@ from sklearn.externals import joblib
 
 from bots.rand import rand
 from bots.rdeep import rdeep
+from bots.kbbot2 import kbbot2
 
 from bots.ml.ml import features
 
@@ -26,7 +27,8 @@ PHASE = 1
 
 # The player we'll observe
 # player = rand.Bot()
-player = rdeep.Bot()
+# player = rdeep.Bot()
+player = kbbot2.Bot()
 
 data = []
 target = []
@@ -84,6 +86,6 @@ for str in target:
 print('instances per class: {}'.format(count))
 
 # Store the model in the ml directory
-joblib.dump(model, './bots/ml/model2.pkl')
+joblib.dump(model, './bots/ml/model3.pkl')
 
 print('Done')
