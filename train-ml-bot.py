@@ -63,8 +63,9 @@ for g in range(GAMES):
 
         target.append(result)
 
-    sys.stdout.write(".")
-    sys.stdout.flush()
+    # sys.stdout.flush()
+    # sys.stdout.write(".")
+    # sys.stdout.flush()
     if g % (GAMES/10) == 0:
         print("")
         print('game {} finished ({}%)'.format(g, (g/float(GAMES)*100)))
