@@ -27,8 +27,8 @@ PHASE = 1
 
 # The player we'll observe
 # player = rand.Bot()
-# player = rdeep.Bot()
-player = kbbot2.Bot()
+player = rdeep.Bot()
+# player = kbbot2.Bot()
 
 data = []
 target = []
@@ -86,6 +86,6 @@ for str in target:
 print('instances per class: {}'.format(count))
 
 # Store the model in the ml directory
-joblib.dump(model, './bots/ml/model3.pkl')
+joblib.dump(model, './bots/ml/modelrdeep3000.pkl')
 
 print('Done')
