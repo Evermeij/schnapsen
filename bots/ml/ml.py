@@ -11,7 +11,7 @@ from sklearn.externals import joblib
 
 # Path of the model we will use. If you make a model
 # with a different name, point this line to its path.
-DEFAULT_MODEL = os.path.dirname(os.path.realpath(__file__)) + '/modelrdeep3000.pkl'
+DEFAULT_MODEL = os.path.dirname(os.path.realpath(__file__)) + '/modelrdeep6000.pkl'
 
 class Bot:
 

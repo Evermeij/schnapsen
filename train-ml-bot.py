@@ -20,7 +20,7 @@ from bots.kbbot2 import kbbot2
 from bots.ml.ml import features
 
 # How many games to play
-GAMES = 3000
+GAMES = 6000
 
 # Which phase the game starts in
 PHASE = 1
@@ -86,6 +86,6 @@ for str in target:
 print('instances per class: {}'.format(count))
 
 # Store the model in the ml directory
-joblib.dump(model, './bots/ml/modelrdeep3000.pkl')
+joblib.dump(model, './bots/ml/modelrdeep6000.pkl')
 
 print('Done')
