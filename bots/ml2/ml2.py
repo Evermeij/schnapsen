@@ -4,14 +4,14 @@ A basic adaptive bot. This is part of the third worksheet.
 
 """
 
-from api import State, util, Deck
+from api import State, util
 import random, os
 
 from sklearn.externals import joblib
 
 # Path of the model we will use. If you make a model
 # with a different name, point this line to its path.
-DEFAULT_MODEL = os.path.dirname(os.path.realpath(__file__)) + '/model.pkl'
+DEFAULT_MODEL = os.path.dirname(os.path.realpath(__file__)) + '/rand-model.pkl'
 
 class Bot:
 
@@ -171,7 +171,7 @@ def features(state):
     feature_set.append(get_point_ratio(state))
 
     # Ratio of current points
-    feature_set.append(p1_points / p2_points)
+    feature_set.append(util.ratio_points(state, state.whose_turn()))
 
     # Number of unknown trump cards
     feature_set.append(get_nr_unknown_trump_cards(state))
@@ -195,12 +195,15 @@ def get_point_ratio(state):
     nr = 0
     for card in perspective:
         if card == 'U' or card == opponent:
-            average_op_points = average_op_points + score[Deck.get_rank(nr)]
+            average_op_points = average_op_points + score[nr % 5]
         if card == player:
-            average_hand = average_hand + score[Deck.get_rank(nr)]
+            average_hand = average_hand + score[nr % 5]
         nr = nr + 1
 
-    return average_hand / average_op_points
+    if average_hand + average_op_points != 0:
+        return average_hand / float(average_hand + average_op_points)
+    else:
+        return 0
 
 
 def get_nr_unknown_trump_cards(state):
@@ -210,10 +213,11 @@ def get_nr_unknown_trump_cards(state):
     perspective = state.get_perspective()
     number = 0
 
-    starting_index = SUITS[trump_suit] * 5
+    starting_index = SUITS.index(trump_suit) * 5
     ending_index = starting_index + 5
     while starting_index < ending_index:
         if perspective[starting_index] == 'U':
             number = number + 1
+        starting_index = starting_index + 1
 
     return number
