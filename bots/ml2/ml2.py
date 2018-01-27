@@ -167,14 +167,14 @@ def features(state):
     opponents_played_card = opponents_played_card if opponents_played_card is not None else -1
     feature_set.append(opponents_played_card)
 
-    # Ratio score of player's cards in hand and unknown cards
-    feature_set.append(get_point_ratio(state))
-
-    # Ratio of current points
+    # Ratio of current points #################################################
     feature_set.append(util.ratio_points(state, state.whose_turn()))
 
     # Number of unknown trump cards
     feature_set.append(get_nr_unknown_trump_cards(state))
+
+    # Add possible cards to feature_set
+    feature_set.append(get_possible_op_hand(state))
 
     # Return feature set
     return feature_set
@@ -205,6 +205,23 @@ def get_point_ratio(state):
     else:
         return 0
 
+
+def get_possible_op_hand(state):
+    if state.whose_turn() == 1:
+        opponent = 'P2H'
+    else:
+        opponent = 'P1H'
+
+    pers = state.get_perspective(state.whose_turn())
+    possible_cards = []
+
+    nr = 0
+    for card in pers:
+        if card == 'U' or card == opponent:
+            possible_cards.append(0)
+        nr = nr + 1
+
+    return possible_cards
 
 def get_nr_unknown_trump_cards(state):
     trump_suit = state.get_trump_suit()
