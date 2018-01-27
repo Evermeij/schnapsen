@@ -36,7 +36,7 @@ def run_tournament(options):
 
             # Generate a state with a random seed
             start = State.generate(phase=int(options.phase))
-
+            print("{} against {}".format(p[0], p[1]))
             winner = engine.play(bots[p[0]], bots[p[1]], start, verbose=False)
 
             #TODO: ALSO IMPLEMENT POINTS FOR WINNING

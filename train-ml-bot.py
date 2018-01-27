@@ -20,7 +20,7 @@ from bots.kbbot2 import kbbot2
 from bots.ml.ml import features
 
 # How many games to play
-GAMES = 1500
+GAMES = 3000
 
 # Which phase the game starts in
 PHASE = 1
