@@ -15,20 +15,21 @@ from sklearn.externals import joblib
 
 from bots.rand import rand
 from bots.rdeep import rdeep
+from bots.ml import ml
 from bots.kbbot2 import kbbot2
 
 from bots.ml.ml import features
 
 # How many games to play
-GAMES = 6000
+GAMES = 10000
 
 # Which phase the game starts in
 PHASE = 1
 
 # The player we'll observe
 # player = rand.Bot()
-player = rdeep.Bot()
-# player = kbbot2.Bot()
+player1 = ml.Bot(model_file='./bots/ml/modelkbbot2.pkl')
+player2 = ml.Bot(model_file='./bots/ml/modelrdeep6000.pkl')
 
 data = []
 target = []
@@ -49,7 +50,11 @@ for g in range(GAMES):
         state_vectors.append(features(given_state))
 
         # Advance to the next state
-        move = player.get_move(given_state)
+        if state.whose_turn() == 1:
+            move = player1.get_move(given_state)
+        else:
+            move = player2.get_move(given_state)
+
         state = state.next(move)
 
     winner, score = state.winner()
@@ -86,6 +91,6 @@ for str in target:
 print('instances per class: {}'.format(count))
 
 # Store the model in the ml directory
-joblib.dump(model, './bots/ml/modelrdeep6000.pkl')
+joblib.dump(model, './bots/ml/modelrdeepkbbot2.pkl')
 
 print('Done')
