@@ -11,6 +11,7 @@ from api import State, util
 import sys
 import sklearn
 import sklearn.linear_model
+import sklearn.neural_network
 from sklearn.externals import joblib
 
 from bots.rand import rand
@@ -21,7 +22,7 @@ from bots.kbbot2 import kbbot2
 from bots.ml2.ml2 import features
 
 # How many games to play
-GAMES = 10000
+GAMES = 30000
 
 # Which phase the game starts in
 PHASE = 1
@@ -81,6 +82,10 @@ for g in range(GAMES):
 learner = sklearn.linear_model.LogisticRegression()
 model = learner.fit(data, target)
 
+# # Train a multi layer perceptron
+# learner = sklearn.neural_network.MLPClassifier()
+# model = learner.fit(data, target)
+
 # Check for class imbalance
 count = {}
 for str in target:
@@ -91,6 +96,6 @@ for str in target:
 print('instances per class: {}'.format(count))
 
 # Store the model in the ml directory
-joblib.dump(model, './bots/ml2/rand-model2.pkl')
+joblib.dump(model, './bots/ml2/rand-model.pkl')
 
 print('Done')

@@ -11,7 +11,7 @@ from sklearn.externals import joblib
 
 # Path of the model we will use. If you make a model
 # with a different name, point this line to its path.
-DEFAULT_MODEL = os.path.dirname(os.path.realpath(__file__)) + '/rand-model.pkl'
+DEFAULT_MODEL = os.path.dirname(os.path.realpath(__file__)) + '/mlp-model.pkl'
 
 class Bot:
 
@@ -168,14 +168,13 @@ def features(state):
     feature_set.append(opponents_played_card)
 
     # Ratio of current points #################################################
-    feature_set.append(util.ratio_points(state, state.whose_turn())*p1_points)
-
-    feature_set.append(p1_points*p1_points)
+    feature_set.append(util.ratio_points(state, state.whose_turn()))
 
     # Number of unknown trump cards
-    feature_set.append(get_nr_unknown_trump_cards(state)*get_hand_value(state))
+    feature_set.append(get_nr_unknown_trump_cards(state))
 
-
+    # Add possible cards to feature_set
+    feature_set.append(get_hand_value(state))
 
     # Return feature set
     return feature_set
