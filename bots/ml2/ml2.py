@@ -175,10 +175,24 @@ def features(state):
     # Number of unknown trump cards
     feature_set.append(get_nr_unknown_trump_cards(state)*get_hand_value(state))
 
-
+    feature_set.append(get_total_value_unknown(state)*get_total_value_unknown(state))
 
     # Return feature set
     return feature_set
+
+
+def get_total_value_unknown(state):
+    perspective = state.get_perspective()
+    nr = 0
+    score = [11, 10, 4, 3, 2]
+    value = 0;
+
+    for card in perspective:
+        if card == 'U':
+            value = value + score[nr % 5]
+        nr += 1
+
+    return value
 
 
 def get_hand_value(state):
