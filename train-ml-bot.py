@@ -11,22 +11,26 @@ from api import State, util
 import sys
 import sklearn
 import sklearn.linear_model
+import sklearn.neural_network
 from sklearn.externals import joblib
 
 from bots.rand import rand
-# from bots.rdeep import rdeep
+from bots.rdeep import rdeep
+from bots.ml import ml
+from bots.kbbot2 import kbbot2
 
-from bots.ml.ml import features
+from bots.ml2.ml2 import features
 
 # How many games to play
-GAMES = 10000
+GAMES = 30000
 
 # Which phase the game starts in
 PHASE = 1
 
 # The player we'll observe
 player = rand.Bot()
-# player = rdeep.Bot()
+# player1 = ml.Bot(model_file='./bots/ml/modelkbbot2.pkl')
+# player2 = ml.Bot(model_file='./bots/ml/modelrdeep6000.pkl')
 
 data = []
 target = []
@@ -47,7 +51,11 @@ for g in range(GAMES):
         state_vectors.append(features(given_state))
 
         # Advance to the next state
-        move = player.get_move(given_state)
+        if state.whose_turn() == 1:
+            move = player.get_move(given_state)
+        else:
+            move = player.get_move(given_state)
+
         state = state.next(move)
 
     winner, score = state.winner()
@@ -63,8 +71,9 @@ for g in range(GAMES):
 
         target.append(result)
 
-    sys.stdout.write(".")
-    sys.stdout.flush()
+    # sys.stdout.flush()
+    # sys.stdout.write(".")
+    # sys.stdout.flush()
     if g % (GAMES/10) == 0:
         print("")
         print('game {} finished ({}%)'.format(g, (g/float(GAMES)*100)))
@@ -72,6 +81,10 @@ for g in range(GAMES):
 # Train a logistic regression model
 learner = sklearn.linear_model.LogisticRegression()
 model = learner.fit(data, target)
+
+# # Train a multi layer perceptron
+# learner = sklearn.neural_network.MLPClassifier()
+# model = learner.fit(data, target)
 
 # Check for class imbalance
 count = {}
@@ -83,6 +96,6 @@ for str in target:
 print('instances per class: {}'.format(count))
 
 # Store the model in the ml directory
-joblib.dump(model, './bots/ml/model.pkl')
+joblib.dump(model, './bots/ml2/rand-model.pkl')
 
 print('Done')

@@ -4,14 +4,14 @@ A basic adaptive bot. This is part of the third worksheet.
 
 """
 
-from api import State, util
+from api import State, util, Deck
 import random, os
 
 from sklearn.externals import joblib
 
 # Path of the model we will use. If you make a model
 # with a different name, point this line to its path.
-DEFAULT_MODEL = os.path.dirname(os.path.realpath(__file__)) + '/model.pkl'
+DEFAULT_MODEL = os.path.dirname(os.path.realpath(__file__)) + '/rand-model.pkl'
 
 class Bot:
 
@@ -167,5 +167,65 @@ def features(state):
     opponents_played_card = opponents_played_card if opponents_played_card is not None else -1
     feature_set.append(opponents_played_card)
 
+    # Ratio of current points #################################################
+    feature_set.append(util.ratio_points(state, state.whose_turn())*p1_points)
+
+    feature_set.append(p1_points*p1_points)
+
+    # Number of unknown trump cards
+    feature_set.append(get_nr_unknown_trump_cards(state)*get_hand_value(state))
+
+    feature_set.append(get_total_value_unknown(state)*get_total_value_unknown(state))
+
     # Return feature set
     return feature_set
+
+
+def get_total_value_unknown(state):
+    perspective = state.get_perspective()
+    nr = 0
+    score = [11, 10, 4, 3, 2]
+    value = 0;
+
+    for card in perspective:
+        if card == 'U':
+            value = value + score[nr % 5]
+        nr += 1
+
+    return value
+
+
+def get_hand_value(state):
+    perspective = state.get_perspective()
+    hand = []
+    nr = 0
+
+    for card in perspective:
+        if card == 'P' + str(state.whose_turn()) + 'H':
+            hand.append(nr)
+        nr += 1
+
+    value = 0
+    score = [11, 10, 4, 3, 2]
+
+    for card in hand:
+        value = value + score[card % 5]
+
+    return value
+
+
+def get_nr_unknown_trump_cards(state):
+    trump_suit = state.get_trump_suit()
+    SUITS = ["C", "D", "H", "S"]
+
+    perspective = state.get_perspective()
+    number = 0
+
+    starting_index = SUITS.index(trump_suit) * 5
+    ending_index = starting_index + 5
+    while starting_index < ending_index:
+        if perspective[starting_index] == 'U':
+            number = number + 1
+        starting_index = starting_index + 1
+
+    return number
