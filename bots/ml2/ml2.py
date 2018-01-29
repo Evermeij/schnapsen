@@ -4,14 +4,14 @@ A basic adaptive bot. This is part of the third worksheet.
 
 """
 
-from api import State, util
+from api import State, util, Deck
 import random, os
 
 from sklearn.externals import joblib
 
 # Path of the model we will use. If you make a model
 # with a different name, point this line to its path.
-DEFAULT_MODEL = os.path.dirname(os.path.realpath(__file__)) + '/rand-model.pkl'
+DEFAULT_MODEL = os.path.dirname(os.path.realpath(__file__)) + '/rand-model2.pkl'
 
 class Bot:
 
@@ -174,54 +174,30 @@ def features(state):
     feature_set.append(get_nr_unknown_trump_cards(state))
 
     # Add possible cards to feature_set
-    feature_set.append(get_possible_op_hand(state))
+    feature_set.append(get_hand_value(state))
 
     # Return feature set
     return feature_set
 
 
-def get_point_ratio(state):
-    if state.whose_turn() == 1:
-        opponent = 'P2H'
-        player = 'P1H'
-    else:
-        opponent = 'P1H'
-        player = 'P2H'
-
+def get_hand_value(state):
     perspective = state.get_perspective()
-    average_op_points = 0
-    average_hand = 0
-    score = [11, 10, 4, 3, 2]
+    hand = []
     nr = 0
+
     for card in perspective:
-        if card == 'U' or card == opponent:
-            average_op_points = average_op_points + score[nr % 5]
-        if card == player:
-            average_hand = average_hand + score[nr % 5]
-        nr = nr + 1
+        if card == 'P' + str(state.whose_turn()) + 'H':
+            hand.append(nr)
+        nr += 1
 
-    if average_hand + average_op_points != 0:
-        return average_hand / float(average_hand + average_op_points)
-    else:
-        return 0
+    value = 0
+    score = [11, 10, 4, 3, 2]
 
+    for card in hand:
+        value = value + score[card % 5]
 
-def get_possible_op_hand(state):
-    if state.whose_turn() == 1:
-        opponent = 'P2H'
-    else:
-        opponent = 'P1H'
+    return value
 
-    pers = state.get_perspective(state.whose_turn())
-    possible_cards = []
-
-    nr = 0
-    for card in pers:
-        if card == 'U' or card == opponent:
-            possible_cards.append(0)
-        nr = nr + 1
-
-    return possible_cards
 
 def get_nr_unknown_trump_cards(state):
     trump_suit = state.get_trump_suit()

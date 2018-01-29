@@ -21,7 +21,7 @@ from bots.kbbot2 import kbbot2
 from bots.ml2.ml2 import features
 
 # How many games to play
-GAMES = 20000
+GAMES = 10000
 
 # Which phase the game starts in
 PHASE = 1
@@ -91,6 +91,6 @@ for str in target:
 print('instances per class: {}'.format(count))
 
 # Store the model in the ml directory
-joblib.dump(model, './bots/ml2/rand-model.pkl')
+joblib.dump(model, './bots/ml2/rand-model2.pkl')
 
 print('Done')
