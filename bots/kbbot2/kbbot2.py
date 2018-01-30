@@ -47,6 +47,13 @@ class Bot:
                     # print "Low non trump strategy applied"
                     return move
 
+            # Check for high non trump move
+            for move in moves:
+
+                if not self.kb_consistent_high_non_trump(state, move):
+                    # print "High non trump strategy applied##############################################"
+                    return move
+
             # print "random move made - on lead"
             return random.choice(moves)
         else:
@@ -68,6 +75,12 @@ class Bot:
                     # print "Low non trump strategy applied"
                     return move
 
+            # Check for high non trump move
+            for move in moves:
+
+                if not self.kb_consistent_high_non_trump(state, move):
+                    # print "High non trump strategy applied###########################################"
+                    return move
             # print "random move made - not on lead"
             return random.choice(moves)
 
@@ -120,6 +133,24 @@ class Bot:
         trump_suit = state.get_trump_suit()
 
         variable_string = "pc" + str(card) + str(trump_suit)
+        strategy_variable = Boolean(variable_string)
+
+        kb.add_clause(~strategy_variable)
+
+        return kb.satisfiable()
+
+    def kb_consistent_high_non_trump(self, state, move):
+        # type: (State, move) -> bool
+
+        kb = KB()
+
+        load2.general_information(kb)
+        load2.strategy_knowledge(kb)
+
+        card = move[0]
+        trump_suit = state.get_trump_suit()
+
+        variable_string = "pch" + str(card) + str(trump_suit)
         strategy_variable = Boolean(variable_string)
 
         kb.add_clause(~strategy_variable)
