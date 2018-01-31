@@ -51,18 +51,18 @@ class Bot:
                         # print "Wedding strategy applied"
                         return move
 
-                if opponent_points > 43:
+                if opponent_points > 33:
                     # Check for high non trump move
                     for move in moves:
 
                         if not self.kb_consistent_high_non_trump(state, move):
-                            # print "High non trump strategy applied"
+                            print "High non trump strategy applied##############################"
                             return move
                     # Check for high non trump move
                     for move in moves:
 
                         if not self.kb_consistent_high_trump(state, move):
-                            # print "High non trump strategy applied"
+                            print "High trump strategy applied#####################################"
                             return move
 
                 # Check for low non trump moves
