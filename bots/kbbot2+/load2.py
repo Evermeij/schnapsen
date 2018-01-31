@@ -185,6 +185,18 @@ PC19C = Boolean('pc19C')
 PC19D = Boolean('pc19D')
 PC19H = Boolean('pc19H')
 
+PC0HT = Boolean('pc0htC')
+PC1HT = Boolean('pc1htC')
+
+PC5HT = Boolean('pc5htD')
+PC6HT = Boolean('pc6htD')
+
+PC10HT = Boolean('pc10htH')
+PC11HT = Boolean('pc11htH')
+
+PC15HT = Boolean('pc15htS')
+PC16HT = Boolean('pc16htS')
+
 WT34CC = Boolean('wt34CC')
 WT24CC = Boolean('wt24CC')
 WT14CC = Boolean('wt14CC')
@@ -280,13 +292,23 @@ def strategy_knowledge(kb):
     kb.add_clause(M1312)
     kb.add_clause(M1817)
 
+    # PLaying a high trump card
+    kb.add_clause(PC0HT)
+    kb.add_clause(PC1HT)
+    kb.add_clause(PC5HT)
+    kb.add_clause(PC6HT)
+    kb.add_clause(PC10HT)
+    kb.add_clause(PC11HT)
+    kb.add_clause(PC15HT)
+    kb.add_clause(PC16HT)
+
     # Knowledge base for Trump Exchange (I might have cheated here)
     kb.add_clause(TE4)
     kb.add_clause(TE9)
     kb.add_clause(TE14)
     kb.add_clause(TE19)
 
-    # Knowledge base for playing a non trump cheap card
+    # Knowledge base for playing a non trump cheap card and high non trump
     kb.add_clause(PC0D)
     kb.add_clause(PC0H)
     kb.add_clause(PC0S)
