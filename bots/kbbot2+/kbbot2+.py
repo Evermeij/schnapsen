@@ -24,13 +24,13 @@ class Bot:
 
     def get_move(self, state):
         moves = sorted(state.moves(), key=lambda tup: tup[0], reverse=True)
-        random.shuffle(moves)
 
         player = state.whose_turn()
         on_lead = state.leader()
 
         player_points = state.get_points(player)
         opponent_points = 0;
+
         if player == 1:
             opponent_points = state.get_points(2)
         else:
